@@ -1,57 +1,56 @@
-﻿namespace DotNet8StrategyPattern.ConsoleApp
+﻿namespace DotNet8StrategyPattern.ConsoleApp;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            Context context;
+        Context context;
 
-            context = new Context(new ConcreteStrategyA());
-            context.ExecuteStrategy();
+        context = new Context(new ConcreteStrategyA());
+        context.ExecuteStrategy();
 
-            context = new Context(new ConcreteStrategyB());
-            context.ExecuteStrategy();
-        }
+        context = new Context(new ConcreteStrategyB());
+        context.ExecuteStrategy();
+    }
+}
+
+public interface IStrategy
+{
+    void Execute();
+}
+
+public class ConcreteStrategyA : IStrategy
+{
+    public void Execute()
+    {
+        Console.WriteLine("Strategy A executed.");
+    }
+}
+
+public class ConcreteStrategyB : IStrategy
+{
+    public void Execute()
+    {
+        Console.WriteLine("Strategy B executed.");
+    }
+}
+
+public class Context
+{
+    private IStrategy _strategy;
+
+    public Context(IStrategy strategy)
+    {
+        _strategy = strategy;
     }
 
-    public interface IStrategy
+    public void SetStrategy(IStrategy strategy)
     {
-        void Execute();
+        _strategy = strategy;
     }
 
-    public class ConcreteStrategyA : IStrategy
+    public void ExecuteStrategy()
     {
-        public void Execute()
-        {
-            Console.WriteLine("Strategy A executed.");
-        }
-    }
-
-    public class ConcreteStrategyB : IStrategy
-    {
-        public void Execute()
-        {
-            Console.WriteLine("Strategy B executed.");
-        }
-    }
-
-    public class Context
-    {
-        private IStrategy _strategy;
-
-        public Context(IStrategy strategy)
-        {
-            _strategy = strategy;
-        }
-
-        public void SetStrategy(IStrategy strategy)
-        {
-            _strategy = strategy;
-        }
-
-        public void ExecuteStrategy()
-        {
-            _strategy.Execute();
-        }
+        _strategy.Execute();
     }
 }
